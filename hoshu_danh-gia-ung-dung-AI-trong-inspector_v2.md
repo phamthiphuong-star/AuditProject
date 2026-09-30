@@ -86,46 +86,51 @@ Workflow hiện tại:
 
 ## 4. Định hướng khắc phục và đề xuất cải thiện
 
-Việc sử dụng Inspector là **bắt buộc** → tập trung đảm bảo tất cả dự án con dùng Inspector đầy đủ, **không thay đổi cách làm việc với Jira**.
+Sử dụng Inspector là **bắt buộc**, không thay đổi cách làm việc với Jira.
 
-### 4.1. Bố trí nguồn lực cho ENNEW *(xử lý 3.1)*
+### 4.1. ENNEW fill kết quả test trên Inspector từ tháng 10 *(xử lý 3.1)*
 
-- **ENNEW:** sang tháng 10, **LeNT thay HaNTT3** test ENNEW. LeNT đã biết cách sử dụng Inspector → **đảm bảo ENNEW được fill kết quả test trên Inspector** ngay từ tháng 10.
+- Từ tháng 10, **LeNT thay HaNTT3** test ENNEW. LeNT đã biết dùng Inspector.
 
-### 4.2. Dùng AI đọc task và bổ sung thông tin còn thiếu *(xử lý 3.2)*
+### 4.2. Dùng MCP để AI đọc đầy đủ task Jira *(xử lý 3.2)*
 
-- Sử dụng **MCP** → đưa task Jira vào và yêu cầu AI **đọc hết từ nội dung task tới tất cả comment**.
-- Trước khi gen testcase hoặc test, dùng AI đọc task Jira để **chỉ ra các điểm còn thiếu/chưa rõ** (luồng, điều kiện, validation, dữ liệu bị ảnh hưởng), **gợi ý các case cần test** và **gợi ý câu hỏi Q&A** cần hỏi dev/PM.
-- Câu trả lời vẫn ghi vào comment Jira như hiện nay → không phát sinh thêm tài liệu spec riêng.
+- Đưa task Jira qua **MCP**, yêu cầu AI **đọc hết nội dung task và tất cả comment**.
+- AI chỉ ra điểm còn thiếu/chưa rõ, gợi ý case cần test và câu hỏi Q&A. Câu trả lời vẫn ghi trong comment Jira.
 
-### 4.3. Quản lý testcase và kết quả test tập trung trên Inspector *(xử lý 3.3, 3.4)*
+### 4.3. Quản lý testcase và kết quả test trên Inspector *(xử lý 3.3, 3.4)*
 
-- Invoice **duy trì việc điền kết quả test lên Inspector**; ENNEW bắt đầu fill kết quả từ tháng 10 (LeNT); các dự án con khác áp dụng tương tự khi có task; quản lý testcase, kết quả test và evidence **tập trung trên Inspector** thay cho các file riêng lẻ.
-- Gắn evidence (**ID data test trên STG**, ảnh chụp màn hình) **trực tiếp vào từng testcase trên Inspector** → khi cần gửi KH thì **export test result** từ Inspector, không phải tổng hợp riêng.
-- **Khai thác chức năng Report trên Inspector** để PM theo dõi trực tiếp tiến độ và kết quả test.
-- Với testcase/checklist đã có, cân nhắc chuyển dần các chức năng hay thay đổi lên Inspector để làm **bộ regression**.
+- Tất cả dự án con **fill kết quả test và gắn evidence** (ID data test trên STG, ảnh chụp màn hình) trên Inspector.
+- PM xem tiến độ, kết quả qua **Report**.
+- Có thể **export test result** từ Inspector để gửi KH.
+- Chuyển dần testcase đã có lên Inspector làm **bộ regression**.
 
-### 4.4. Chia sẻ testcase giữa dev và tester *(xử lý 3.5)*
+### 4.4. Chia sẻ testcase cho dev *(xử lý 3.5)*
 
-- Đính kèm **link testcase trên Inspector vào task Jira**, để dev xem ngay trong task thay vì phải lấy file riêng.
-- Khuyến khích dev **tự kiểm tra theo các case chính** trước khi chuyển task cho tester.
+- Gắn **link testcase trên Inspector vào task Jira**; dev tự kiểm tra các case chính trước khi chuyển cho tester.
 
-### 4.5. Tách riêng từng hệ thống trên Inspector trước khi làm auto test *(xử lý 3.6)*
+### 4.5. Tách riêng từng hệ thống trên Inspector *(xử lý 3.6)*
 
-- Trên Inspector, **tách riêng project/spec/data cho từng hệ thống** (ENNEW, Invoice, BI, DB Renew, Synchronize), không để chung một nơi; khi gen testcase hoặc auto test thì **chỉ định rõ hệ thống** cần test.
-- Thử trước với **1 hệ thống** (ưu tiên Invoice) để kiểm tra AI đã lấy đúng spec, trước khi mở rộng.
-- Không làm auto test cho task gấp release trong ngày; chỉ bắt đầu với **các chức năng ổn định, hay phải regression**, khi đã có testcase trên Inspector (mục 4.3).
-- Bố trí công số cài đặt auto test vào thời điểm ít task gấp.
+- Mỗi hệ thống **một project/spec riêng**; khi gen testcase hoặc auto test phải **chỉ định rõ hệ thống**. Thử trước với Invoice.
+- Auto test: không làm cho task gấp release trong ngày; bắt đầu với **chức năng ổn định, hay phải regression**.
 
-### 4.6. Dùng chung rule/skill gen testcase cho cả cụm HOSHU *(đề xuất thêm)*
+### 4.6. Dùng chung rule/skill cho cả cụm *(đề xuất thêm)*
 
-- Các dự án con có cách làm spec/Jira và quy trình test giống nhau → xây **một bộ rule/skill chung cho cụm** (nghiệp vụ chung, validation chung), kèm **phần riêng cho từng hệ thống** (tách file) để AI không lẫn spec giữa các hệ thống (mục 3.6).
-- Lưu tập trung, có người phụ trách cập nhật, để chất lượng testcase AI gen đồng đều giữa các dự án con.
+- Một bộ **rule/skill chung** cho cụm, kèm **file riêng cho từng hệ thống**; có người phụ trách cập nhật.
 
 ---
 
 ## 5. Kết luận
 
-Cụm HOSHU chưa áp dụng AI để gen testcase dù PM có mong muốn áp dụng. Spec đầu vào chỉ là mô tả ngắn trên Jira; testcase làm thủ công; chỉ có IT, test manual; Invoice đã điền kết quả lên Inspector nhưng ENNEW chưa điền, nên PM chưa có dữ liệu để đánh giá chất lượng test. Auto test chưa áp dụng được do không có công số (task gấp, release trong ngày) và AI gen testcase lẫn giữa các hệ thống trong cụm.
+**Hiện trạng:**
 
-Trọng tâm cải thiện là **đảm bảo ENNEW fill kết quả test trên Inspector từ tháng 10 (LeNT thay HaNTT3)**; **dùng MCP để AI đọc đầy đủ task Jira (nội dung + tất cả comment) khi gen testcase**; **điền kết quả và quản lý testcase tập trung trên Inspector**; **tách riêng từng hệ thống trên Inspector trước khi làm auto test**; đồng thời **chia sẻ testcase giữa dev – tester và dùng chung rule/skill cho cả cụm**.
+- Chưa dùng AI gen testcase; testcase làm thủ công, chỉ test IT manual.
+- Invoice đã fill kết quả trên Inspector, ENNEW chưa → PM không có báo cáo tổng hợp.
+- Auto test chưa làm được: không có công số, AI lẫn spec giữa các hệ thống.
+
+**Trọng tâm cải thiện:**
+
+1. ENNEW fill kết quả trên Inspector từ tháng 10 (LeNT).
+2. Dùng MCP để AI đọc đầy đủ task Jira khi gen testcase.
+3. Quản lý testcase, kết quả, evidence tập trung trên Inspector.
+4. Tách riêng từng hệ thống trên Inspector, trước khi làm auto test.
+5. Chia sẻ testcase cho dev, dùng chung rule/skill cho cả cụm.
